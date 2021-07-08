@@ -15,15 +15,23 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import environ
+
+env = environ.Env()
+env.read_env('.env')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '35u35y35y3tyertg423t24t34t34ty34t'
+
+
+SECRET_KEY = env('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = env.bool('DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -61,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'geekshop.urls'
@@ -86,6 +95,10 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = '7898632'
 SOCIAL_AUTH_VK_OAUTH2_SECRET = 'iAb5uxJe6VleIxzM1Ce5'
+
+#SOCIAL_AUTH_VK_OAUTH2_KEY = env('VK_ID')
+# VK APP SECRET KEY
+#SOCIAL_AUTH_VK_OAUTH2_SECRET = env('VK_KEY')
 
 
 # Database
@@ -156,14 +169,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login/'
 
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_SSL = True
 
-DOMAIN_NAME = 'http://localhost:8000'
-
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'django@geekshop.local'
-EMAIL_HOST_PASSWORD = 'geekshop'
-EMAIL_USE_SSL = False
  
 #вариант python -m smtpd -n -c DebuggingServer localhost:25
 #EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
@@ -171,3 +182,5 @@ EMAIL_USE_SSL = False
 #вариант логирования сообщений почты в виде файлов вместо отправки
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/email-messages/'
+
+
