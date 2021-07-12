@@ -171,9 +171,10 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_USE_SSL = True
 
+
  
 #вариант python -m smtpd -n -c DebuggingServer localhost:25
-#EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
  
 #вариант логирования сообщений почты в виде файлов вместо отправки
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
