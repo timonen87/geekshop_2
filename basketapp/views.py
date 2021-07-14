@@ -23,6 +23,8 @@ def basket(request):
     return render(request, 'basketapp/basket.html', context=context)
 
 
+
+
 @login_required
 def basket_add(request, pk):
     product = get_object_or_404(Product, pk=pk)
